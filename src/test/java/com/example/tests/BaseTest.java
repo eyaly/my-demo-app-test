@@ -3,6 +3,8 @@ package com.example.tests;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import com.saucelabs.visual.VisualApi;
+import com.saucelabs.visual.DataCenter;
 import org.openqa.selenium.MutableCapabilities;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,9 +19,14 @@ import java.time.Duration;
 import org.testng.ITestResult;
 import org.openqa.selenium.JavascriptExecutor;
 
+import com.saucelabs.visual.testng.TestMetaInfoListener;
+import org.testng.annotations.Listeners;
+
+@Listeners({TestMetaInfoListener.class})
 public class BaseTest {
 
     private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
+    private static final ThreadLocal<VisualApi> visual = new ThreadLocal<>();
 
     public AppiumDriver getDriver() {
         return driver.get();
@@ -27,6 +34,14 @@ public class BaseTest {
 
     public void setDriver(AppiumDriver driverInstance) {
         driver.set(driverInstance);
+    }
+
+    public VisualApi getVisual() {
+        return visual.get();
+    }
+
+    public void setVisual(VisualApi visualInstance) {
+        visual.set(visualInstance);
     }
 
     @Parameters({"platformName", "platformVersion", "deviceName", "app"})
@@ -84,6 +99,13 @@ public class BaseTest {
         
         if (getDriver() != null) {
             getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            
+            // Initialize VisualApi
+            setVisual(new VisualApi.Builder(getDriver(), username, accessKey, DataCenter.EU_CENTRAL_1)
+                    .withBuild("Sauce My Demo App Test")
+                    .withBranch("main")
+                    .withProject("Appium examples")
+                    .build());
         }
     }
 
@@ -100,6 +122,9 @@ public class BaseTest {
                 System.out.println("Sauce - release driver");
                 driverInstance.quit();
                 driver.remove();
+                if (getVisual() != null) {
+                    visual.remove();
+                }
             }
         }
     }

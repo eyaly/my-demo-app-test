@@ -5,8 +5,8 @@
     <test name="Android Test" parallel="methods" thread-count="6">
         <parameters>
             <parameter name="platformName" value="Android"/>
-            <parameter name="platformVersion" value="13"/>
-            <parameter name="deviceName" value="Samsung Galaxy S22.*"/>
+            <parameter name="platformVersion" value="11"/>
+            <parameter name="deviceName" value="Samsung Galaxy S20"/>
             <parameter name="app" value="storage:filename=mda-2.0.0-21.apk"/>
         </parameters>
         <classes>

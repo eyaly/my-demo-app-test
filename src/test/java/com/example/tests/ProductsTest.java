@@ -17,6 +17,8 @@ public class ProductsTest extends BaseTest {
         Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
         String platformName = String.valueOf(platformNameObj);
 
+        getVisual().sauceVisualCheck("Products Screen");
+
         if (platformName.equalsIgnoreCase("Android")) {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
@@ -25,10 +27,14 @@ public class ProductsTest extends BaseTest {
             wait.until(ExpectedConditions.visibilityOfElementLocated(firstProduct));
             getDriver().findElement(firstProduct).click();
 
+            getVisual().sauceVisualCheck("Click on the first product");
+
             // Click on "Tap to add product to cart"
             By addToCartBtn = AppiumBy.accessibilityId("Tap to add product to cart");
             wait.until(ExpectedConditions.visibilityOfElementLocated(addToCartBtn));
             getDriver().findElement(addToCartBtn).click();
+
+            getVisual().sauceVisualCheck("Click on - Tap to add product to cart");
 
             // Verify cart badge text is 1
             By cartBadge = By.id("com.saucelabs.mydemoapp.android:id/cartTV");
@@ -57,5 +63,8 @@ public class ProductsTest extends BaseTest {
 //            wait.until(ExpectedConditions.visibilityOfElementLocated(productItem));
             Assert.assertTrue(getDriver().findElement(productItem).isDisplayed(), "Product list should be visible");
         }
+
+        getVisual().sauceVisualCheck("Products Screen");
+
     }
 }
