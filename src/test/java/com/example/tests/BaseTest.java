@@ -19,7 +19,15 @@ import org.openqa.selenium.JavascriptExecutor;
 
 public class BaseTest {
 
-    protected AppiumDriver driver;
+    private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
+
+    public AppiumDriver getDriver() {
+        return driver.get();
+    }
+
+    public void setDriver(AppiumDriver driverInstance) {
+        driver.set(driverInstance);
+    }
 
     @Parameters({"platformName", "platformVersion", "deviceName", "app"})
     @BeforeMethod
@@ -56,7 +64,7 @@ public class BaseTest {
                 caps.setCapability("appium:automationName", "UiAutomator2");
                 caps.setCapability("sauce:options", sauceOptions);
                 
-                driver = new AndroidDriver(url, caps);
+                setDriver(new AndroidDriver(url, caps));
 
             } else if (platformName.equalsIgnoreCase("iOS")) {
 
@@ -64,7 +72,7 @@ public class BaseTest {
                 caps.setCapability("appium:automationName", "XCUITest");
                 caps.setCapability("sauce:options", sauceOptions);
 
-                driver = new IOSDriver(url, caps);
+                setDriver(new IOSDriver(url, caps));
             } else {
                 throw new IllegalArgumentException("Platform name must be 'Android' or 'iOS'");
             }
@@ -74,22 +82,24 @@ public class BaseTest {
             throw new RuntimeException("Driver initialization failed", e);
         }
         
-        if (driver != null) {
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        if (getDriver() != null) {
+            getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         }
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
-        if (driver != null) {
+        AppiumDriver driverInstance = getDriver();
+        if (driverInstance != null) {
             try {
                 String status = result.isSuccess() ? "passed" : "failed";
-                ((JavascriptExecutor) driver).executeScript("sauce:job-result=" + status);
+                ((JavascriptExecutor) driverInstance).executeScript("sauce:job-result=" + status);
             } catch (Exception e) {
                 System.err.println("Failed to report test status to Sauce Labs: " + e.getMessage());
             } finally {
                 System.out.println("Sauce - release driver");
-                driver.quit();
+                driverInstance.quit();
+                driver.remove();
             }
         }
     }

@@ -15,7 +15,7 @@ public class SortTest extends BaseTest {
     @Test
     public void testSortByOptionsAvailable() {
         // Convert the platformName capability to String safely
-        Object platformNameObj = driver.getCapabilities().getCapability("platformName");
+        Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
         String platformName = String.valueOf(platformNameObj);
         
         System.out.println("Running testSortByOptionsAvailable on " + platformName);
@@ -24,9 +24,9 @@ public class SortTest extends BaseTest {
             // Android Locators
             By sortButton = By.id("com.saucelabs.mydemoapp.android:id/sortIV");
             
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOfElementLocated(sortButton));
-            driver.findElement(sortButton).click();
+            getDriver().findElement(sortButton).click();
 
             // Verify Sort Options by Accessibility ID
             Assert.assertTrue(isElementVisible(AppiumBy.accessibilityId("Ascending order by name")), "Ascending order by name option not visible");
@@ -38,9 +38,9 @@ public class SortTest extends BaseTest {
              // iOS Locators
              By sortButton = AppiumBy.iOSClassChain("**/XCUIElementTypeButton[`name == \"Button\"`]");
 
-             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
              wait.until(ExpectedConditions.visibilityOfElementLocated(sortButton));
-             driver.findElement(sortButton).click();
+             getDriver().findElement(sortButton).click();
 
              // Verify Sort Options by iOS Class Chain
              Assert.assertTrue(isElementVisible(AppiumBy.iOSClassChain("**/XCUIElementTypeStaticText[`name == \"Name - Ascending\"`]")), "Name - Ascending option not visible");
@@ -52,7 +52,7 @@ public class SortTest extends BaseTest {
 
     private boolean isElementVisible(By locator) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
             wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
             return true;
         } catch (Exception e) {
