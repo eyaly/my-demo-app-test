@@ -1,5 +1,6 @@
 package com.example.tests;
 
+import com.saucelabs.visual.CheckOptions;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -17,7 +18,12 @@ public class ProductsTest extends BaseTest {
         Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
         String platformName = String.valueOf(platformNameObj);
 
-        getVisual().sauceVisualCheck("Products Screen");
+//        CheckOptions options = new CheckOptions();
+//        options.enableFullPageScreenshots();
+//        getVisual().sauceVisualCheck("Products Screen (full page)", options);
+        CheckOptions options = new CheckOptions();
+        options.setCaptureDom(true);
+        getVisual().sauceVisualCheck("Products Screen", options);
 
         if (platformName.equalsIgnoreCase("Android")) {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
@@ -27,14 +33,14 @@ public class ProductsTest extends BaseTest {
             wait.until(ExpectedConditions.visibilityOfElementLocated(firstProduct));
             getDriver().findElement(firstProduct).click();
 
-            getVisual().sauceVisualCheck("Click on the first product");
+            getVisual().sauceVisualCheck("Click on the first product",options);
 
             // Click on "Tap to add product to cart"
             By addToCartBtn = AppiumBy.accessibilityId("Tap to add product to cart");
             wait.until(ExpectedConditions.visibilityOfElementLocated(addToCartBtn));
             getDriver().findElement(addToCartBtn).click();
 
-            getVisual().sauceVisualCheck("Click on - Tap to add product to cart");
+            getVisual().sauceVisualCheck("Click on - Tap to add product to cart",options);
 
             // Verify cart badge text is 1
             By cartBadge = By.id("com.saucelabs.mydemoapp.android:id/cartTV");
@@ -63,8 +69,10 @@ public class ProductsTest extends BaseTest {
 //            wait.until(ExpectedConditions.visibilityOfElementLocated(productItem));
             Assert.assertTrue(getDriver().findElement(productItem).isDisplayed(), "Product list should be visible");
         }
-
-        getVisual().sauceVisualCheck("Products Screen");
+        CheckOptions options = new CheckOptions();
+//        options.enableFullPageScreenshots();
+        options.setCaptureDom(true);
+        getVisual().sauceVisualCheck("Products Screen", options);
 
     }
 }
