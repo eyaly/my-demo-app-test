@@ -7,7 +7,7 @@ on:
     branches: [ main, master ]
 
 jobs:
-  test:
+  my-demo-app-test:
     runs-on: ubuntu-latest
     
     steps:
@@ -25,5 +25,5 @@ jobs:
       env:
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-        BUILD_NAME: ${{ github.job }}-${{ github.run_id }}
+        BUILD_NAME: ${{ github.job }}-${{ github.run_number }}
       run: mvn test
