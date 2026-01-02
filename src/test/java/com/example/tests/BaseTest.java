@@ -69,7 +69,14 @@ public class BaseTest {
             MutableCapabilities sauceOptions = new MutableCapabilities();
             sauceOptions.setCapability("username", username);
             sauceOptions.setCapability("accessKey", accessKey);
-            sauceOptions.setCapability("build", "appium-demo-test-build_8");
+            
+            String buildName = System.getenv("BUILD_NAME");
+            if (buildName != null && !buildName.isEmpty()) {
+                sauceOptions.setCapability("build", buildName);
+            } else {
+                sauceOptions.setCapability("build", "appium-demo-test-build_8");
+            }
+            
             sauceOptions.setCapability("name", method.getName());
             sauceOptions.setCapability("appiumVersion", "latest");
 
@@ -102,9 +109,9 @@ public class BaseTest {
             
             // Initialize VisualApi
             setVisual(new VisualApi.Builder(getDriver(), username, accessKey, DataCenter.EU_CENTRAL_1)
-                    .withBuild("Sauce My Demo App Test")
-                    .withBranch("main")
-                    .withProject("Appium examples")
+                    .withBuild("Sauce My Demo App Test 2")
+                    .withBranch("login-feature")
+                    .withProject("Appium examples 2")
                     .build());
         }
     }
