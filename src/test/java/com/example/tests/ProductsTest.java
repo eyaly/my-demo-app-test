@@ -13,7 +13,7 @@ import java.time.Duration;
 
 public class ProductsTest extends BaseTest {
 
-    String productItemLoc = "com.saucelabs.mydemoapp.android:id/productIV";
+    String productItemLoc = "com.saucelabs.mydemoapp.android:id/productIV_2";
     @Test
     public void testAddToCart() {
         Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
