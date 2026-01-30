@@ -10,7 +10,7 @@
             <parameter name="app" value="storage:filename=mda-2.0.0-21.apk"/>
         </parameters>
         <classes>
-<!--            <class name="com.example.tests.SortTest"/>-->
+            <class name="com.example.tests.SortTest"/>
             <class name="com.example.tests.ProductsTest"/>
         </classes>
     </test>
