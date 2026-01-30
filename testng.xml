@@ -36,7 +36,7 @@
            <parameter name="app" value="storage:filename=SauceLabs-Demo-App.ipa"/>
        </parameters>
        <classes>
-           <!-- <class name="com.example.tests.SortTest"/> -->
+            <class name="com.example.tests.SortTest"/>
            <class name="com.example.tests.ProductsTest"/>
        </classes>
    </test> 
