@@ -26,5 +26,5 @@ jobs:
       env:
         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
         SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-        BUILD_NAME: ${{ github.job }}-${{ github.run_number }}
+        BUILD_NAME: ${{ github.job }}-release-${{ github.run_number }}
       run: mvn test

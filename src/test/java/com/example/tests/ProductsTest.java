@@ -48,11 +48,20 @@ public class ProductsTest extends BaseTest {
             WebElement cartElement = getDriver().findElement(cartBadge);
             Assert.assertEquals(cartElement.getText(), "1", "Cart badge text should be 1");
         } else if (platformName.equalsIgnoreCase("iOS")) {
-            // Intentional failure for iOS: Click on non-existent locator
+
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-            By nonExistentElement = AppiumBy.accessibilityId("this-element-does-not-exist");
-            wait.until(ExpectedConditions.visibilityOfElementLocated(nonExistentElement));
-            getDriver().findElement(nonExistentElement).click();
+            By firstProduct = By.xpath("(//XCUIElementTypeImage[@name='Product Image'])[1]");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(firstProduct));
+            getDriver().findElement(firstProduct).click();
+
+            // Click on "Tap to add product to cart"
+            By addToCartBtn = AppiumBy.accessibilityId("Add To Cart");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(addToCartBtn));
+            getDriver().findElement(addToCartBtn).click();
+
+            // Intentional failure for iOS: Click on non-existent locator
+            //By nonExistentElement = AppiumBy.accessibilityId("this-element-does-not-exist");
+
         }
     }
 
