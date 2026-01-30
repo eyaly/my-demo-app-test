@@ -88,4 +88,21 @@ public class ProductsTest extends BaseTest {
 //            getVisual().sauceVisualCheck("Products Screen iOS");
 //        }
     }
+
+    @Test
+    public void testProductsScreenLoaded_2() {
+
+        //   getVisual().sauceVisualCheck("Products Screen");
+        Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
+        String platformName = String.valueOf(platformNameObj);
+
+        if (platformName.equalsIgnoreCase("Android")) {
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+
+            // Check for the presence of a product item to verify screen is loaded
+            By productItem = By.id("com.saucelabs.mydemoapp.android:id/productIV");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(productItem));
+            Assert.assertTrue(getDriver().findElement(productItem).isDisplayed(), "Product list should be visible");
+        }
+    }
 }
