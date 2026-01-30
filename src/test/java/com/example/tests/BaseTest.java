@@ -1,5 +1,6 @@
 package com.example.tests;
 
+import com.saucelabs.visual.graphql.type.DiffStatus;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -15,6 +16,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Map;
 
 import org.testng.ITestResult;
 import org.openqa.selenium.JavascriptExecutor;
@@ -22,11 +24,15 @@ import org.openqa.selenium.JavascriptExecutor;
 import com.saucelabs.visual.testng.TestMetaInfoListener;
 import org.testng.annotations.Listeners;
 
+import static org.testng.Assert.assertEquals;
+
 @Listeners({TestMetaInfoListener.class})
 public class BaseTest {
 
     private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
-    private static final ThreadLocal<VisualApi> visual = new ThreadLocal<>();
+//    private static final ThreadLocal<VisualApi> visual = new ThreadLocal<>();
+    private static VisualApi visual;
+//    private static VisualApi visual;
 
     public AppiumDriver getDriver() {
         return driver.get();
@@ -37,11 +43,12 @@ public class BaseTest {
     }
 
     public VisualApi getVisual() {
-        return visual.get();
+        return visual;//.get();
     }
 
     public void setVisual(VisualApi visualInstance) {
-        visual.set(visualInstance);
+//        visual.set(visualInstance);
+        visual = visualInstance;
     }
 
     @Parameters({"platformName", "platformVersion", "deviceName", "app"})
@@ -56,6 +63,7 @@ public class BaseTest {
         
         String username = System.getenv("SAUCE_USERNAME");
         String accessKey = System.getenv("SAUCE_ACCESS_KEY");
+
         if (username == null || accessKey == null) {
              System.out.println("Warning: SAUCE_USERNAME or SAUCE_ACCESS_KEY environment variables not set.");
         }
@@ -65,6 +73,7 @@ public class BaseTest {
             caps.setCapability("appium:platformVersion", platformVersion);
             caps.setCapability("appium:deviceName", deviceName);
             caps.setCapability("appium:app", app);
+
 
             MutableCapabilities sauceOptions = new MutableCapabilities();
             sauceOptions.setCapability("username", username);
@@ -76,9 +85,10 @@ public class BaseTest {
             } else {
                 sauceOptions.setCapability("build", "appium-demo-test-build_8");
             }
-            
+
             sauceOptions.setCapability("name", method.getName());
             sauceOptions.setCapability("appiumVersion", "latest");
+            sauceOptions.setCapability("phoneOnly", true);
 
             if (platformName.equalsIgnoreCase("Android")) {
 
@@ -104,22 +114,37 @@ public class BaseTest {
             throw new RuntimeException("Driver initialization failed", e);
         }
         
-        if (getDriver() != null) {
-            getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            
-            // Initialize VisualApi
-            setVisual(new VisualApi.Builder(getDriver(), username, accessKey, DataCenter.EU_CENTRAL_1)
-                    .withBuild("Sauce My Demo App Test 2")
-                    .withBranch("login-feature")
-                    .withProject("Appium examples 2")
-                    .build());
-        }
+//        if (getDriver() != null) {
+//            getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//
+//            // Initialize VisualApi
+//            setVisual(new VisualApi.Builder(getDriver(), username, accessKey, DataCenter.EU_CENTRAL_1)
+//                    .withBuild("Sauce My Demo App Test 2")
+//                    .withBranch("login-feature")
+//                    .withProject("Appium examples 2")
+//                    .build());
+//        }
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
         AppiumDriver driverInstance = getDriver();
         if (driverInstance != null) {
+
+//            try {
+//                if (getVisual() != null) {
+//                    var EXPECTED_TOTAL_UNAPPROVED_DIFFS = 0;
+//                    Map<DiffStatus, Integer> res = getVisual().sauceVisualResults();
+//                    System.out.println("Sauce - visual results: " + res);
+//             //       assertEquals(res.get(DiffStatus.UNAPPROVED), EXPECTED_TOTAL_UNAPPROVED_DIFFS);
+//
+//                }
+//            } catch (Throwable e) {
+//                 // Mark test as failed in TestNG if visual assertion failed
+//                 result.setStatus(ITestResult.FAILURE);
+//                 result.setThrowable(e);
+//            }
+
             try {
                 String status = result.isSuccess() ? "passed" : "failed";
                 ((JavascriptExecutor) driverInstance).executeScript("sauce:job-result=" + status);
@@ -129,9 +154,9 @@ public class BaseTest {
                 System.out.println("Sauce - release driver");
                 driverInstance.quit();
                 driver.remove();
-                if (getVisual() != null) {
-                    visual.remove();
-                }
+//                if (getVisual() != null) {
+//                    visual.remove();
+//                }
             }
         }
     }

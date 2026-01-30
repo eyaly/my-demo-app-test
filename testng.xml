@@ -5,8 +5,8 @@
     <test name="Android Test" parallel="methods" thread-count="6">
         <parameters>
             <parameter name="platformName" value="Android"/>
-            <parameter name="platformVersion" value="11"/>
-            <parameter name="deviceName" value="Samsung Galaxy S20"/>
+            <parameter name="platformVersion" value="16"/>
+            <parameter name="deviceName" value="Samsung.*"/>
             <parameter name="app" value="storage:filename=mda-2.0.0-21.apk"/>
         </parameters>
         <classes>
@@ -15,17 +15,30 @@
         </classes>
     </test>
 
-<!--    <test name="iOS Test" parallel="methods" thread-count="6">-->
+<!--    <test name="Android emulator Test " parallel="methods" thread-count="6">-->
 <!--        <parameters>-->
-<!--            <parameter name="platformName" value="iOS"/>-->
-<!--            <parameter name="platformVersion" value="17"/>-->
-<!--            <parameter name="deviceName" value="iPhone 14.*"/>-->
-<!--            <parameter name="app" value="storage:filename=SauceLabs-Demo-App.ipa"/>-->
+<!--            <parameter name="platformName" value="Android"/>-->
+<!--            <parameter name="platformVersion" value="16.0"/>-->
+<!--            <parameter name="deviceName" value="Google Pixel 6 Emulator"/>-->
+<!--            <parameter name="app" value="storage:filename=welcome.apk"/>-->
 <!--        </parameters>-->
 <!--        <classes>-->
-<!--            <class name="com.example.tests.SortTest"/>-->
+<!--            &lt;!&ndash;            <class name="com.example.tests.SortTest"/>&ndash;&gt;-->
 <!--            <class name="com.example.tests.ProductsTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
+
+   <test name="iOS Test" parallel="methods" thread-count="6">
+       <parameters>
+           <parameter name="platformName" value="iOS"/>
+           <parameter name="platformVersion" value="18"/>
+           <parameter name="deviceName" value="iPhone.*"/>
+           <parameter name="app" value="storage:filename=SauceLabs-Demo-App.ipa"/>
+       </parameters>
+       <classes>
+           <!-- <class name="com.example.tests.SortTest"/> -->
+           <class name="com.example.tests.ProductsTest"/>
+       </classes>
+   </test> 
 
 </suite>

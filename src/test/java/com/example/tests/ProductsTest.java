@@ -21,9 +21,9 @@ public class ProductsTest extends BaseTest {
 //        CheckOptions options = new CheckOptions();
 //        options.enableFullPageScreenshots();
 //        getVisual().sauceVisualCheck("Products Screen (full page)", options);
-        CheckOptions options = new CheckOptions();
-        options.setCaptureDom(true);
-        getVisual().sauceVisualCheck("Products Screen", options);
+        // CheckOptions options = new CheckOptions();
+        // options.setCaptureDom(true);
+    //    getVisual().sauceVisualCheck("Products Screen");
 
         if (platformName.equalsIgnoreCase("Android")) {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
@@ -33,14 +33,14 @@ public class ProductsTest extends BaseTest {
             wait.until(ExpectedConditions.visibilityOfElementLocated(firstProduct));
             getDriver().findElement(firstProduct).click();
 
-            getVisual().sauceVisualCheck("Click on the first product",options);
+       //     getVisual().sauceVisualCheck("Click on the first product");
 
             // Click on "Tap to add product to cart"
             By addToCartBtn = AppiumBy.accessibilityId("Tap to add product to cart");
             wait.until(ExpectedConditions.visibilityOfElementLocated(addToCartBtn));
             getDriver().findElement(addToCartBtn).click();
 
-            getVisual().sauceVisualCheck("Click on - Tap to add product to cart",options);
+       //     getVisual().sauceVisualCheck("Click on - Tap to add product to cart");
 
             // Verify cart badge text is 1
             By cartBadge = By.id("com.saucelabs.mydemoapp.android:id/cartTV");
@@ -49,30 +49,34 @@ public class ProductsTest extends BaseTest {
             Assert.assertEquals(cartElement.getText(), "1", "Cart badge text should be 1");
         } else if (platformName.equalsIgnoreCase("iOS")) {
             // Intentional failure for iOS: Click on non-existent locator
-//            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-//            By nonExistentElement = AppiumBy.accessibilityId("this-element-does-not-exist");
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(nonExistentElement));
-//            getDriver().findElement(nonExistentElement).click();
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+            By nonExistentElement = AppiumBy.accessibilityId("this-element-does-not-exist");
+            wait.until(ExpectedConditions.visibilityOfElementLocated(nonExistentElement));
+            getDriver().findElement(nonExistentElement).click();
         }
     }
 
     @Test
     public void testProductsScreenLoaded() {
+
+     //   getVisual().sauceVisualCheck("Products Screen");
         Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
         String platformName = String.valueOf(platformNameObj);
 
         if (platformName.equalsIgnoreCase("Android")) {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
-            
+
             // Check for the presence of a product item to verify screen is loaded
             By productItem = By.id("com.saucelabs.mydemoapp.android:id/productIV");
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(productItem));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(productItem));
             Assert.assertTrue(getDriver().findElement(productItem).isDisplayed(), "Product list should be visible");
-        }
-        CheckOptions options = new CheckOptions();
+        // CheckOptions options = new CheckOptions();
 //        options.enableFullPageScreenshots();
-        options.setCaptureDom(true);
-        getVisual().sauceVisualCheck("Products Screen", options);
-
+        // options.setCaptureDom(true);
+   //     getVisual().sauceVisualCheck("Products Screen");
+        }
+//        else {
+//            getVisual().sauceVisualCheck("Products Screen iOS");
+//        }
     }
 }
