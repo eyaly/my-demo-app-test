@@ -13,6 +13,7 @@ import java.time.Duration;
 
 public class ProductsTest extends BaseTest {
 
+    String productItemLoc = "com.saucelabs.mydemoapp.android:id/productIV";
     @Test
     public void testAddToCart() {
         Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
@@ -76,7 +77,7 @@ public class ProductsTest extends BaseTest {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
             // Check for the presence of a product item to verify screen is loaded
-            By productItem = By.id("com.saucelabs.mydemoapp.android:id/productIV");
+            By productItem = By.id(productItemLoc);
             wait.until(ExpectedConditions.visibilityOfElementLocated(productItem));
             Assert.assertTrue(getDriver().findElement(productItem).isDisplayed(), "Product list should be visible");
         // CheckOptions options = new CheckOptions();
@@ -100,7 +101,7 @@ public class ProductsTest extends BaseTest {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
 
             // Check for the presence of a product item to verify screen is loaded
-            By productItem = By.id("com.saucelabs.mydemoapp.android:id/productIV");
+            By productItem = By.id(productItemLoc);
             wait.until(ExpectedConditions.visibilityOfElementLocated(productItem));
             Assert.assertTrue(getDriver().findElement(productItem).isDisplayed(), "Product list should be visible");
         }
