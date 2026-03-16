@@ -7,7 +7,7 @@
             <parameter name="platformName" value="Android"/>
             <parameter name="platformVersion" value="16"/>
             <parameter name="deviceName" value="Samsung.*"/>
-            <parameter name="app" value="storage:filename=mda-2.0.0-21.apk"/>
+            <parameter name="app" value="storage:filename=androidMobileDemoApp.apk"/>
         </parameters>
         <classes>
             <class name="com.example.tests.SortTest"/>
