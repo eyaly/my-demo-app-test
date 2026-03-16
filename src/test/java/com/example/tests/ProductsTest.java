@@ -13,18 +13,12 @@ import java.time.Duration;
 
 public class ProductsTest extends BaseTest {
 
+    // this is a locator that doesn't exist because of the "_2" 
     String productItemLoc = "com.saucelabs.mydemoapp.android:id/productIV_2";
     @Test
     public void testAddToCart() {
         Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
         String platformName = String.valueOf(platformNameObj);
-
-//        CheckOptions options = new CheckOptions();
-//        options.enableFullPageScreenshots();
-//        getVisual().sauceVisualCheck("Products Screen (full page)", options);
-        // CheckOptions options = new CheckOptions();
-        // options.setCaptureDom(true);
-    //    getVisual().sauceVisualCheck("Products Screen");
 
         if (platformName.equalsIgnoreCase("Android")) {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
@@ -80,14 +74,7 @@ public class ProductsTest extends BaseTest {
             By productItem = By.id(productItemLoc);
             wait.until(ExpectedConditions.visibilityOfElementLocated(productItem));
             Assert.assertTrue(getDriver().findElement(productItem).isDisplayed(), "Product list should be visible");
-        // CheckOptions options = new CheckOptions();
-//        options.enableFullPageScreenshots();
-        // options.setCaptureDom(true);
-   //     getVisual().sauceVisualCheck("Products Screen");
         }
-//        else {
-//            getVisual().sauceVisualCheck("Products Screen iOS");
-//        }
     }
 
     @Test
