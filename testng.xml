@@ -15,19 +15,6 @@
         </classes>
     </test>
 
-<!--    <test name="Android emulator Test " parallel="methods" thread-count="6">-->
-<!--        <parameters>-->
-<!--            <parameter name="platformName" value="Android"/>-->
-<!--            <parameter name="platformVersion" value="16.0"/>-->
-<!--            <parameter name="deviceName" value="Google Pixel 6 Emulator"/>-->
-<!--            <parameter name="app" value="storage:filename=welcome.apk"/>-->
-<!--        </parameters>-->
-<!--        <classes>-->
-<!--            &lt;!&ndash;            <class name="com.example.tests.SortTest"/>&ndash;&gt;-->
-<!--            <class name="com.example.tests.ProductsTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
    <test name="iOS Test" parallel="methods" thread-count="6">
        <parameters>
            <parameter name="platformName" value="iOS"/>
