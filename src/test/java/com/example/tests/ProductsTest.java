@@ -14,7 +14,7 @@ import java.time.Duration;
 public class ProductsTest extends BaseTest {
 
     // this is a locator that doesn't exist because of the "_2" 
-    String productItemLoc = "com.saucelabs.mydemoapp.android:id/productIV_2";
+    String productItemLoc = "com.saucelabs.mydemoapp.android:id/productIV";
     @Test
     public void testAddToCart() {
 
