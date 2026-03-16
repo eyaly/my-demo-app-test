@@ -17,6 +17,11 @@ public class ProductsTest extends BaseTest {
     String productItemLoc = "com.saucelabs.mydemoapp.android:id/productIV_2";
     @Test
     public void testAddToCart() {
+        try {
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
         String platformName = String.valueOf(platformNameObj);
 
