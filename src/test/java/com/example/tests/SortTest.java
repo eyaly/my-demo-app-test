@@ -14,11 +14,6 @@ public class SortTest extends BaseTest {
 
     @Test
     public void testSortByOptionsAvailable() {
-        try {
-            Thread.sleep(60000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
         // Convert the platformName capability to String safely
         Object platformNameObj = getDriver().getCapabilities().getCapability("platformName");
         String platformName = String.valueOf(platformNameObj);
